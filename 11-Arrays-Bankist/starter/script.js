@@ -98,8 +98,18 @@ const calcPrintBalance = movements => {
 
   labelBalance.textContent = `$${balance}`;
 };
-
 calcPrintBalance(account1.movements);
+
+const calcDisplaySummary = movements => {
+  const incomes = movements
+    .filter(mov => mov > 0)
+    .reduce((acc, mov) => acc + mov, 0);
+
+  labelSumIn.textContent = `$${incomes}`;
+};
+calcDisplaySummary(account1.movements);
+
+const out
 
 /////////////////////////////////////////////////
 /////////////////////////////////////////////////
@@ -245,7 +255,7 @@ const maxValue = movements.reduce((acc, curr) => {
 console.log(maxValue);
  */
 
-const testData1 = [5, 2, 4, 1, 15, 8, 3];
+/* const testData1 = [5, 2, 4, 1, 15, 8, 3];
 const testData2 = [16, 6, 10, 5, 6, 1, 4];
 
 const calcAverageHumanAge = arr => {
@@ -258,4 +268,14 @@ const calcAverageHumanAge = arr => {
   }
 
 console.log(calcAverageHumanAge(testData1));
-console.log(calcAverageHumanAge(testData2));
+console.log(calcAverageHumanAge(testData2)); */
+
+const eurToUsd = 1.1;
+
+// PIPELINE
+const totalDepositsUSD = movements
+  .filter(mov => mov > 0)
+  .map(mov => mov * eurToUsd)
+  .reduce((acc, mov) => acc + mov, 0);
+
+console.log(totalDepositsUSD);
