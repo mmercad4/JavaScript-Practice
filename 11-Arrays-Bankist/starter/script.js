@@ -212,7 +212,7 @@ const movementsDescriptions = movements.map((mov, i, arr) => {
 
 console.log(movementsDescriptions); */
 
-//Filer method
+/* //Filter method
 const deposits = movements.filter(mov => {
   return mov > 0;
 });
@@ -243,3 +243,19 @@ const maxValue = movements.reduce((acc, curr) => {
 }, 0);
 
 console.log(maxValue);
+ */
+
+const testData1 = [5, 2, 4, 1, 15, 8, 3];
+const testData2 = [16, 6, 10, 5, 6, 1, 4];
+
+const calcAverageHumanAge = arr => {
+  const humanYearsConversion = arr.map((age) =>
+     age <= 2 ? age*2 : 16+age*4)
+     .filter((age) => age <= 18)
+     .reduce((acc, curr, i, arr) => (acc+curr)/arr.length);
+  
+  return humanYearsConversion;
+  }
+
+console.log(calcAverageHumanAge(testData1));
+console.log(calcAverageHumanAge(testData2));
