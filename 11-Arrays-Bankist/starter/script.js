@@ -62,27 +62,44 @@ const inputCloseUsername = document.querySelector('.form__input--user');
 const inputClosePin = document.querySelector('.form__input--pin');
 
 const displayMovements = function (movements) {
-
   containerMovements.innerHTML = '';
 
   movements.forEach(function (movement, index) {
-
-    const type = movement > 0 ? 'deposit' : 'withdrawal'
+    const type = movement > 0 ? 'deposit' : 'withdrawal';
 
     const html = `        
     <div class="movements__row">
-    <div class="movements__type movements__type--${type}">${index + 1}: ${type}</div>
+    <div class="movements__type movements__type--${type}">${
+      index + 1
+    }: ${type}</div>
     <div class="movements__date">3 days ago</div>
     <div class="movements__value">${movement}</div>
   </div>
   `;
 
-  containerMovements.insertAdjacentHTML('afterbegin', html);
-
+    containerMovements.insertAdjacentHTML('afterbegin', html);
   });
 };
-
 displayMovements(account1.movements);
+
+const createUsernames = accounts => {
+  accounts.forEach(acc => {
+    acc.username = acc.owner
+      .toLowerCase()
+      .split(' ')
+      .map(name => name[0])
+      .join('');
+  });
+};
+createUsernames(accounts);
+
+const calcPrintBalance = movements => {
+  const balance = movements.reduce((acc, mov) => acc + mov, 0);
+
+  labelBalance.textContent = `$${balance}`;
+};
+
+calcPrintBalance(account1.movements);
 
 /////////////////////////////////////////////////
 /////////////////////////////////////////////////
@@ -164,5 +181,65 @@ const currenciesUnique = new Set(['USD', 'GBP', 'USD', 'EUR', 'EURO']);
 currenciesUnique.forEach(function (value, _) {
   console.log(value);
 });
- */
+*/
 
+/* // Map Method returns a new array with a new method ; does not mutate the array
+const euroToUsd = 1.1;
+
+//Code below both do the same thing; functional programming Methods with callback functions
+const movementsUSD = movements.map(function (movements) {
+  return movements * euroToUsd;
+});
+
+//code below is the same as code above but it is an arrow function
+//Which you prefer is based on preference; code below is cleaner and short but not as
+//readable as code above
+const movementsUSDArrow = movements.map(movements => movements * euroToUsd);
+
+// Not as conventional in modern javascript
+const movementsUSDfor = [];
+for (const movements of movements) {
+  movementsUSD.push(movements * euroToUsd);
+}
+
+//Map method also has an index
+const movementsDescriptions = movements.map((mov, i, arr) => {
+  return `Movement ${i + 1} You ${mov > 0 ? 'deposited' : 'withdrew'} ${Math.abs(
+    mov
+  )}`;
+});
+
+
+console.log(movementsDescriptions); */
+
+//Filer method
+const deposits = movements.filter(mov => {
+  return mov > 0;
+});
+
+const withdrawals = movements.filter(mov => {
+  return mov < 0;
+});
+
+console.log(deposits);
+console.log(withdrawals);
+
+//reduce method
+//Accumulator -> snowball/sum
+const balance = movements.reduce(
+  (accumulator, current, i, arr) => accumulator + current,
+  0
+);
+
+console.log(balance);
+
+//Maximum value
+const maxValue = movements.reduce((acc, curr) => {
+  if (acc > curr) {
+    return acc;
+  }
+
+  return curr;
+}, 0);
+
+console.log(maxValue);
