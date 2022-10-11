@@ -415,4 +415,4 @@ console.log('Waiting...');
   const formattedTime = Intl.DateTimeFormat(navigator.locale, options).format(now);
 
   console.log(formattedTime);
-}, 1000); */
+}, 10000); */
